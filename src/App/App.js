@@ -10,20 +10,32 @@ class App extends Component {
     }
   }
 
-  componentDidMount = () => {
+  getReservations = () => {
     fetch('http://localhost:3001/api/v1/reservations')
       .then(response => response.json())
       .then(data => this.setState({ reservations: data }))
   }
 
+  componentDidMount = () => {
+    this.getReservations()
+  }
+
   addReservation = newRes => {
-    this.setState({ reservations: [...this.state.reservations, newRes] })
+    fetch('http://localhost:3001/api/v1/reservations', {
+      method: 'POST',
+      body: JSON.stringify(newRes),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(json => this.getReservations())
+      .catch(err => console.log('err', err))
   }
 
   render() {
-
     const cards = this.state.reservations.map(reservation => {
-      return (<div className='resy-container'>
+      return (<div className='resy-container' key={reservation.id} id={reservation.id}>
         <h2>{reservation.name}</h2>
         <h3>{reservation.date}</h3>
         <h3>{reservation.time}</h3>
@@ -31,8 +43,6 @@ class App extends Component {
       </div>
       )
     })
-
-
     return (
       <div className="App">
         <h1 className='app-title'>Turing Cafe Reservations</h1>
@@ -40,9 +50,6 @@ class App extends Component {
           <Form addReservation={this.addReservation} />
         </div>
         {cards}
-        {/* <div className='resy-container'>
-
-        </div> */}
       </div>
     )
   }
