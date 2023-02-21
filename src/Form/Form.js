@@ -19,18 +19,17 @@ class Form extends Component {
     handleClick = e => {
         e.preventDefault()
         const newRes = {
-            id: Date.now(),
             name: this.state.name,
             date: this.state.date,
             time: this.state.time,
-            number: this.state.number
+            number: parseInt(this.state.number)
         }
         this.props.addReservation(newRes)
     }
 
     render() {
         return (
-            <div>
+            <form>
                 <input
                     placeholder='Name'
                     autoComplete='off'
@@ -58,13 +57,13 @@ class Form extends Component {
                 <input
                     placeholder='Number of guests'
                     autoComplete='off'
-                    type='number'
+                    type='search'
                     name='number'
                     value={this.state.number}
                     onChange={e => this.handleChange(e)}
                 />
                 <button onClick={e => this.handleClick(e)}>Make Reservation</button>
-            </div>
+            </form>
         )
     }
 }
