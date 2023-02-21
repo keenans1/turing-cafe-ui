@@ -16,15 +16,28 @@ class App extends Component {
   }
 
   render() {
+
+    const cards = this.state.reservations.map(reservation => {
+      return (<div className='resy-container'>
+        <h2>{reservation.name}</h2>
+        <h3>{reservation.date}</h3>
+        <h3>{reservation.time}</h3>
+        <h3>Number of guests: {reservation.number}</h3>
+      </div>
+      )
+    })
+
+
     return (
       <div className="App">
         <h1 className='app-title'>Turing Cafe Reservations</h1>
         <div className='resy-form'>
 
         </div>
-        <div className='resy-container'>
+        {cards}
+        {/* <div className='resy-container'>
 
-        </div>
+        </div> */}
       </div>
     )
   }
