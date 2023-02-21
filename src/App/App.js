@@ -14,6 +14,7 @@ class App extends Component {
     fetch('http://localhost:3001/api/v1/reservations')
       .then(response => response.json())
       .then(data => this.setState({ reservations: data }))
+      .catch(err => console.log('get error', err))
   }
 
   componentDidMount = () => {
@@ -30,7 +31,7 @@ class App extends Component {
     })
       .then(response => response.json())
       .then(json => this.getReservations())
-      .catch(err => console.log('err', err))
+      .catch(err => console.log('post err', err))
   }
 
   render() {
